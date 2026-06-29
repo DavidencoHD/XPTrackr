@@ -1,59 +1,105 @@
-# XPTrackr
+# XPTrackr - Frontend
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.0.7.
+Frontend de **XPTrackr**, una plataforma de seguimiento de biblioteca de videojuegos desarrollada con Angular 19. Permite a los usuarios buscar juegos, gestionar su biblioteca personal, y conectarse con otros jugadores.
 
-## Development server
+## Tecnologías
 
-To start a local development server, run:
+- **Framework:** Angular 19 (standalone components)
+- **Lenguaje:** TypeScript 5.6
+- **Estilos:** Tailwind CSS v4.1.5
+- **HTTP Client:** Angular HttpClient + Axios
+- **Reactividad:** RxJS 7.8
+
+## Características
+
+- **Autenticación** - Registro, login y logout con cookies (Sanctum)
+- **Búsqueda de juegos** - Búsqueda en tiempo real integrada en la navbar
+- **Detalle de juego** - Página con puntuación Metacritic, géneros, plataformas, screenshots
+- **Biblioteca personal** - Añadir juegos con estado (Jugando, Completado, Pendiente, etc.), notas y valoración
+- **Sistema de perfil** - Avatar personalizable, edición de datos, cambio de contraseña
+- **Sistema de amigos** - Buscar usuarios, enviar/aceptar solicitudes de amistad
+- **Próximos lanzamientos** - Carrusel con juegos que salen en la próxima semana
+- **Consentimiento de cookies** - Banner GDPR compliant
+
+## Requisitos previos
+
+- [Node.js](https://nodejs.org/) >= 18
+- [Angular CLI](https://cli.angular.dev/) >= 19
+- Backend XPTrackr corriendo en `http://localhost:8000`
+
+## Instalación
 
 ```bash
+# Clonar el repositorio
+git clone https://github.com/DavidencoHD/XPTrackr.git
+cd XPTrackr
+
+# Instalar dependencias
+npm install
+
+# Iniciar servidor de desarrollo
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+La aplicación estará disponible en `http://localhost:4200`.
 
-## Code scaffolding
+## Estructura del proyecto
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
+```
+src/
+├── app/
+│   ├── guards/              # Guards de autenticación
+│   ├── services/            # Servicios (auth, games, friends, library)
+│   └── shared/components/   # Componentes standalone
+│       ├── navbar/          # Barra de navegación con búsqueda
+│       ├── footer/          # Pie de página
+│       ├── cookie-consent/  # Banner cookies GDPR
+│       ├── dashboard/       # Página principal
+│       ├── login/           # Formulario de login
+│       ├── register/        # Formulario de registro
+│       ├── game-search/     # Búsqueda de juegos
+│       ├── game-detail/     # Detalle de juego
+│       ├── next-games/      # Carrusel de próximos lanzamientos
+│       ├── profile-view/    # Visualización de perfil
+│       ├── profile-edit/    # Edición de perfil
+│       └── friends/         # Sistema de amigos
+├── environments/            # Configuración de entornos
+└── assets/                  # Imágenes y recursos estáticos
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## Rutas
+
+| Ruta | Descripción | Auth |
+|------|-------------|------|
+| `/dashboard` | Página principal | No |
+| `/login` | Iniciar sesión | No |
+| `/register` | Registrarse | No |
+| `/profile` | Mi perfil | Sí |
+| `/profile/edit` | Editar perfil | Sí |
+| `/profile/:userId` | Ver perfil de otro usuario | No |
+| `/games/:id` | Detalle de juego | No |
+| `/friends` | Sistema de amigos | Sí |
+
+## Comandos útiles
 
 ```bash
-ng generate --help
+ng serve              # Iniciar servidor de desarrollo
+ng build              # Generar build de producción
+ng test               # Ejecutar tests unitarios
+ng lint               # Verificar código con linter
 ```
 
-## Building
+## Variables de entorno
 
-To build the project run:
+El archivo `src/environments/environment.ts` contiene la URL del backend:
 
-```bash
-ng build
+```typescript
+export const environment = {
+  production: true,
+  apiUrl: 'http://localhost:8000/api'
+};
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+## Backend
 
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+El backend de este proyecto está disponible en [XPTrackrBackend](https://github.com/DavidencoHD/XPTrackrBackend).
